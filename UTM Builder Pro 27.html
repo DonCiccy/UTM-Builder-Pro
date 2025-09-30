@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>UTM Builder Pro — Elegant</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280; --brand:#2563eb; --success:#10b981;
+      --radius:10px; --pad:18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color:#0f172a;
+      padding:28px;
+      display:flex;
+      justify-content:center;
+    }
+    .wrap{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 1fr 1fr; /* colonne uguali */
+      gap:22px;
+      align-items:start;
+    }
+    .wrap > div { min-width: 0; } /* impedisce alla colonna destra di crescere */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:var(--pad);
+      box-shadow:0 8px 30px rgba(15,23,42,0.06);
+    }
+    h1{margin:0 0 6px;font-size:1.4rem}
+    p.lead{margin:0 0 18px;color:var(--muted);font-size:0.95rem}
+    label{display:block;font-size:0.9rem;margin-top:12px;font-weight:600}
+    .hint{font-size:0.82rem;color:var(--muted);margin-top:6px;margin-bottom:8px}
+    .row{display:flex;gap:12px}
+    input[type=text], select, textarea{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #e6edf3;
+      background:#fbfdff;
+      font-size:0.95rem;
+      color:#0f172a;
+      outline:none;
+    }
+    textarea{min-height:78px;resize:vertical;font-family:inherit}
+    .muted{color:var(--muted);font-size:0.85rem}
+    .buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      font-size:0.95rem;
+    }
+    .btn-primary{background:var(--brand);color:white}
+    .btn-ghost{background:transparent;border:1px solid #e6edf3;color:#0f172a}
+    .btn-success{background:var(--success);color:white}
+    .small{padding:8px 10px;font-size:0.88rem;border-radius:8px}
+    .panel{background:var(--card);border-radius:var(--radius);padding:var(--pad);box-shadow:0 6px 20px rgba(15,23,42,0.04);}
+    .output{font-family:var(--mono);background:#fbfdff;border:1px dashed #e6edf3;padding:12px;border-radius:8px;word-break:break-all;white-space:pre-line}
+    .list{max-height:240px;overflow:auto;margin-top:10px}
+    table{width:100%;border-collapse:collapse;font-size:0.88rem}
+    th,td{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
+    th{font-weight:700;color:#0f172a;background:transparent;position:sticky;top:0}
+    .tiny{font-size:0.82rem;color:var(--muted)}
+    .chip{display:inline-block;background:#f1f5f9;padding:6px 8px;border-radius:999px;font-size:0.85rem;margin-right:6px}
+    .templates-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .tmpl{
+      display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;border:1px solid #f1f5f9;background:#fff}
+    .tmpl button{margin-left:8px}
+    .search{display:flex;gap:8px;align-items:center}
+    input.search-input{padding:8px 10px;border-radius:8px;border:1px solid #e6edf3;width:100%}
+    @media (max-width:980px){
+      .wrap{grid-template-columns:1fr; padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- LEFT COLUMN: Form -->
+    <div class="card" aria-labelledby="title">
+      <h1 id="title">UTM Builder Pro</h1>
+      <p class="lead">Create standardized tracking URLs quickly. Use templates, generate A/B variants, shorten links and keep an audit log.</p>
+
+      <label for="baseUrl">Destination URL</label>
+      <input id="baseUrl" type="text" placeholder="https://www.example.com/product-page">
+
+      <div style="display:flex;gap:12px;margin-top:12px;">
+        <div style="flex:1">
+          <label for="sourceSelect">Traffic Source</label>
+          <select id="sourceSelect" aria-label="Traffic Source">
+            <option value="">— Select —</option>
+            <option value="facebook">Facebook</option>
+            <option value="instagram">Instagram</option>
+            <option value="google">Google</option>
+            <option value="newsletter">Newsletter</option>
+            <option value="affiliate">Affiliate</option>
+            <option value="other">Other…</option>
+          </select>
+          <input id="sourceCustom" type="text" placeholder="Type custom source" style="display:none;margin-top:8px">
+          <div class="hint">Where does traffic come from? e.g. <span class="chip">facebook</span> <span class="chip">newsletter</span></div>
+        </div>
+
+        <div style="flex:1">
+          <label for="mediumSelect">Medium</label>
+          <select id="mediumSelect">
+            <option value="">— Select —</option>
+            <option value="cpc">CPC</option>
+            <option value="organic">Organic</option>
+            <option value="social">Social</option>
+            <option value="email">Email</option>
+            <option value="referral">Referral</option>
+            <option value="other">Other…</option>
+          </select>
+          <input id="mediumCustom" type="text" placeholder="Type custom medium" style="display:none;margin-top:8px">
+          <div class="hint">Channel type. Keep values consistent: <span class="chip">cpc</span> <span class="chip">email</span></div>
+        </div>
+      </div>
+
+      <label for="campaign">Campaign Name</label>
+      <input id="campaign" type="text" placeholder="spring_sale_2025">
+      <div class="hint">Unique campaign identifier. Prefer lowercase, use dashes or underscores.</div>
+
+      <div class="row" style="margin-top:6px">
+        <div style="flex:1">
+          <label for="content">Content (variants)</label>
+          <input id="content" type="text" placeholder="bannerA,bannerB — separate with commas">
+          <div class="hint">Optional. Use to distinguish creatives (A/B).</div>
+        </div>
+        <div style="width:170px">
+          <label for="term">Term (keywords)</label>
+          <input id="term" type="text" placeholder="running,shoes">
+          <div class="hint">Optional. Use for search keywords or targeting terms.</div>
+        </div>
+      </div>
+
+      <label for="bitlyKey">Bitly API Key (optional)</label>
+      <input id="bitlyKey" type="text" placeholder="Paste your Bitly API token to enable shortening (optional)">
+      <div class="hint">You can generate shortened links using your Bitly account. This key is stored locally in your browser only while the page is open.</div>
+
+      <div class="buttons" style="margin-top:14px">
+        <button class="btn btn-primary" id="generateBtn">Generate Links</button>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Activity Log & Generated Links -->
+    <div>
+      <div class="panel">
+        <h3 style="margin:0">Activity Log</h3>
+        <p class="muted" style="margin-top:6px">Audit trail of generated links, grouped by each click. Search, export or clear the history.</p>
+
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <input id="logSearch" class="search-input" placeholder="Search log (campaign, source, medium, date...)"/>
+          <button class="btn small btn-ghost" id="exportLogBtn">Export Log</button>
+          <button class="btn small btn-ghost" id="clearLogBtn">Clear Log</button>
+        </div>
+
+        <div style="margin-top:12px" class="list">
+          <table id="logTable" aria-live="polite">
+            <thead><tr>
+              <th>When</th><th>Campaign</th><th>Source</th><th>Medium</th><th>Content</th><th>Term</th><th>Long</th><th>Short</th>
+            </tr></thead>
+            <tbody id="logBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <label class="tiny">Generated URLs</label>
+        <div id="generatedOutput" class="output" style="display:none"></div>
+        <button class="btn btn-ghost" id="copyAllBtn" style="margin-top:10px; display:none">Copy All</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* SCRIPT INVARIATO */
+    const $ = id => document.getElementById(id);
+    const storage = { logKey:'utmLog_v2' };
+    let generated=[];
+
+    const sourceSelect = $('sourceSelect'), mediumSelect=$('mediumSelect');
+    const sourceCustom = $('sourceCustom'), mediumCustom = $('mediumCustom');
+    const baseUrlEl = $('baseUrl'), campaignEl=$('campaign');
+    const contentEl=$('content'), termEl=$('term'), generatedOutput=$('generatedOutput');
+    const bitlyKeyEl = $('bitlyKey');
+
+    sourceSelect.addEventListener('change',()=>{ sourceCustom.style.display=sourceSelect.value==='other'?'block':'none'; });
+    mediumSelect.addEventListener('change',()=>{ mediumCustom.style.display=mediumSelect.value==='other'?'block':'none'; });
+
+    function getLog(){ try{return JSON.parse(localStorage.getItem(storage.logKey)||'[]');}catch{return[];} }
+    function saveLog(log){ localStorage.setItem(storage.logKey,JSON.stringify(log||[])); renderLog(); }
+
+    function renderGenerated(){
+      if(!generated.length){ generatedOutput.style.display='none'; $('copyAllBtn').style.display='none'; return; }
+      generatedOutput.style.display='block';
+      $('copyAllBtn').style.display='inline-block';
+      const lines = generated.map((g,i)=>`${i+1}. ${g.longUrl}${g.shortUrl?' → '+g.shortUrl:''}`);
+      generatedOutput.innerHTML=lines.map(l=>l.replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank">$1</a>')).join('<br>');
+    }
+
+    async function generateUTMs(){
+      const base = baseUrlEl.value.trim();
+      if(!base){ alert('Enter base URL'); return; }
+      const source = sourceSelect.value==='other'?sourceCustom.value.trim():sourceSelect.value;
+      const medium = mediumSelect.value==='other'?mediumCustom.value.trim():mediumSelect.value;
+      const campaign = campaignEl.value.trim();
+      if(!campaign){ alert('Enter campaign'); return; }
+
+      const contentArr = contentEl.value.split(',').map(s=>s.trim()).filter(Boolean);
+      const termArr = termEl.value.split(',').map(s=>s.trim()).filter(Boolean);
+      generated=[]; 
+      const contentList = contentArr.length?contentArr:['']; 
+      const termList = termArr.length?termArr:[''];
+      for(const c of contentList){
+        for(const t of termList){
+          const url = new URL(base);
+          if(source) url.searchParams.set('utm_source',source);
+          if(medium) url.searchParams.set('utm_medium',medium);
+          if(campaign) url.searchParams.set('utm_campaign',campaign);
+          if(c) url.searchParams.set('utm_content',c);
+          if(t) url.searchParams.set('utm_term',t);
+          const obj = {longUrl:url.toString(), shortUrl:''};
+          generated.push(obj);
+        }
+      }
+
+      renderGenerated();
+
+      const log = getLog();
+      const now = new Date().toLocaleString();
+      const group = generated.map(g=>({when:now,campaign,source,medium,content:contentEl.value,term:termEl.value,longUrl:g.longUrl,shortUrl:g.shortUrl}));
+      log.push({group:group});
+      saveLog(log);
+
+      const key = bitlyKeyEl.value.trim();
+      if(key){
+        for(const item of group){
+          try{
+            const res = await fetch('https://api-ssl.bitly.com/v4/shorten',{
+              method:'POST',
+              headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+              body:JSON.stringify({long_url:item.longUrl})
+            });
+            const data = await res.json();
+            if(data.link) item.shortUrl=data.link;
+          }catch(e){}
+        }
+        saveLog(log); renderGenerated();
+      }
+    }
+
+    $('generateBtn').addEventListener('click',generateUTMs);
+
+    $('copyAllBtn').addEventListener('click',()=>{
+      if(!generated.length) return;
+      navigator.clipboard.writeText(generated.map(g=>g.longUrl).join('\n'));
+      alert('Copied!');
+    });
+
+    function renderLog(){
+      const log = getLog();
+      const tbody = $('logBody'); tbody.innerHTML='';
+      for(const grp of log){
+        const header = document.createElement('tr');
+        header.innerHTML=`<td colspan="8" style="font-weight:bold; background:#f1f5f9;">Generated at ${grp.group[0].when}</td>`;
+        tbody.appendChild(header);
+        for(const item of grp.group){
+          const tr=document.createElement('tr');
+          tr.innerHTML=`<td>${item.when}</td><td>${item.campaign||'-'}</td><td>${item.source||'-'}</td><td>${item.medium||'-'}</td><td>${item.content||'-'}</td><td>${item.term||'-'}</td><td><a href="${item.longUrl}" target="_blank">🔗</a></td><td>${item.shortUrl?'<a href="'+item.shortUrl+'" target="_blank">🔗</a>':'-'}</td>`;
+          tbody.appendChild(tr);
+        }
+      }
+    }
+
+    $('logSearch').addEventListener('input',e=>{
+      const val = e.target.value.toLowerCase();
+      const log = getLog();
+      const tbody = $('logBody'); tbody.innerHTML='';
+      for(const grp of log){
+        const filtered = grp.group.filter(item=>[item.campaign,item.source,item.medium,item.content,item.term].some(v=>v.toLowerCase().includes(val)));
+        if(filtered.length){
+          const header = document.createElement('tr');
+          header.innerHTML=`<td colspan="8" style="font-weight:bold; background:#f1f5f9;">Generated at ${grp.group[0].when}</td>`;
+          tbody.appendChild(header);
+          for(const item of filtered){
+            const tr=document.createElement('tr');
+            tr.innerHTML=`<td>${item.when}</td><td>${item.campaign||'-'}</td><td>${item.source||'-'}</td><td>${item.medium||'-'}</td><td>${item.content||'-'}</td><td>${item.term||'-'}</td><td><a href="${item.longUrl}" target="_blank">🔗</a></td><td>${item.shortUrl?'<a href="'+item.shortUrl+'" target="_blank">🔗</a>':'-'}</td>`;
+            tbody.appendChild(tr);
+          }
+        }
+      }
+    });
+
+    $('clearLogBtn').addEventListener('click',()=>{
+      if(confirm('Clear Activity Log?')){ localStorage.removeItem(storage.logKey); renderLog();}
+    });
+
+    $('exportLogBtn').addEventListener('click',()=>{
+      const log=getLog();
+      const lines=[];
+      for(const grp of log){
+        lines.push(`Generated at ${grp.group[0].when}`);
+        for(const item of grp.group){
+          lines.push([item.when,item.campaign,item.source,item.medium,item.content,item.term,item.longUrl,item.shortUrl].join(','));
+        }
+      }
+      const blob=new Blob([lines.join('\n')],{type:'text/csv'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download='utm_log.csv'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    renderLog();
+  </script>
+</body>
+</html>
